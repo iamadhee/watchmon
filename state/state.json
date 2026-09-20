@@ -2,11 +2,11 @@
   "alerted": {
     "steal:itmc614d660f11e8": 5250
   },
-  "last_attempt_ts": 1789923291.3451,
-  "updated": "2026-09-20T17:03:29+00:00",
-  "failures": 0,
-  "last_failure": null,
-  "backoff_until_ts": 0,
+  "last_attempt_ts": 1789931560.3502905,
+  "updated": "2026-09-20T19:14:00+00:00",
+  "failures": 1,
+  "last_failure": "network unreachable",
+  "backoff_until_ts": 1789932160.3502905,
   "last_success_ts": 1789923291.3451,
   "last_history_ts": 1789923291.3451,
   "history_offset": 70
