@@ -1,13 +1,11 @@
 {
-  "alerted": {
-    "steal:itmc614d660f11e8": 5250
-  },
-  "last_attempt_ts": 1789947941.7718005,
-  "updated": "2026-09-20T23:47:01+00:00",
-  "failures": 1,
-  "last_failure": "network unreachable",
-  "backoff_until_ts": 1789948541.7718005,
-  "last_success_ts": 1789940606.4019856,
-  "last_history_ts": 1789940606.4019856,
-  "history_offset": 0
+  "alerted": {},
+  "last_attempt_ts": 1789958455.1112862,
+  "updated": "2026-09-21T02:48:00+00:00",
+  "failures": 0,
+  "last_failure": null,
+  "backoff_until_ts": 0,
+  "last_success_ts": 1789958455.1112862,
+  "last_history_ts": 1789958455.1112862,
+  "history_offset": 14
 }
