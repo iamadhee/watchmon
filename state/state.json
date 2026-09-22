@@ -1,10 +1,10 @@
 {
   "alerted": {},
-  "last_attempt_ts": 1790098102.243239,
-  "updated": "2026-09-22T17:35:55+00:00",
-  "failures": 0,
-  "last_failure": null,
-  "backoff_until_ts": 0,
+  "last_attempt_ts": 1790108591.1569667,
+  "updated": "2026-09-22T20:24:42+00:00",
+  "failures": 1,
+  "last_failure": "scrape: Page.goto: Timeout 45000ms exceeded.\nCall log:\n  - navigating to \"https://www.flipkart.com/search?q=invicta+automatic&sort=price_asc&page=1\", waiting until \"domcontentloaded\"\n",
+  "backoff_until_ts": 1790109191.1569667,
   "last_success_ts": 1790098102.243239,
   "last_history_ts": 1790098102.243239,
   "history_offset": 42
