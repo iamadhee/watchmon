@@ -1,0 +1,94 @@
+name: sale-window
+
+# Manual only, and deliberately so. Scheduled runs drift 2-5 hours against a
+# 30-minute cron, which is fine for price history but useless during a sale.
+# This is one bounded job with a tight internal cadence — not a self-chaining
+# loop, which would be using CI as always-on compute.
+on:
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: "Window length in minutes (job is killed at 360)"
+        default: "330"
+      interval:
+        description: "Minutes between checks"
+        default: "10"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: watch-check       # shares the scheduled run's group: never both at once
+  cancel-in-progress: false
+
+jobs:
+  sale:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache the browser download
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-chromium
+
+      - name: Install
+        run: |
+          pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Restore state
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p logs
+          [ -f state/state.json ] && cp state/state.json state.json || true
+          gh release download history-store --pattern history.db --output history.db --clobber \
+            || echo "no history yet; starting fresh"
+
+      - name: Sale window
+        env:
+          WATCH_SITE_BASE: ${{ secrets.WATCH_SITE_BASE }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          AFFILIATE_CONFIG: ${{ secrets.AFFILIATE_CONFIG }}
+        run: |
+          python monitor.py --loop \
+            --loop-minutes "${{ inputs.minutes }}" \
+            --loop-interval "${{ inputs.interval }}" -v
+
+      # Runs even if the window is cancelled or times out, so a long sale
+      # window cannot lose its data wholesale.
+      - name: Persist state
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p state upload
+          cp state.json state/state.json 2>/dev/null || true
+          python - <<'PY'
+          import sqlite3, pathlib
+          if pathlib.Path("history.db").exists():
+              src = sqlite3.connect("history.db")
+              dst = sqlite3.connect("upload/history.db")
+              src.backup(dst)          # WAL-safe; a plain cp lands an empty file
+              dst.close(); src.close()
+              print("history rows:",
+                    sqlite3.connect("upload/history.db")
+                           .execute("SELECT COUNT(*) FROM products").fetchone()[0])
+          PY
+          [ -f upload/history.db ] && gh release upload history-store upload/history.db --clobber || true
+          if [ -n "$(git status --porcelain state)" ]; then
+            git config user.name  "watch-bot"
+            git config user.email "watch-bot@users.noreply.github.com"
+            git add state
+            git commit -m "state: sale window $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi

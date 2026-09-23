@@ -242,6 +242,18 @@ CARD_WAIT_MS = 12_000
 # automatic sweep still runs every tick, so the ₹8,000 rule stays responsive.
 HISTORY_INTERVAL_SEC = 2 * 3600
 
+# -- bounded loop ------------------------------------------------------------
+# A single run that checks repeatedly for a fixed window, for sale events where
+# cron drift (2-5h in practice) is the difference between catching a deal and
+# missing it. Deliberately bounded: a self-chaining job would be using CI as
+# always-on compute, which is both against the terms and a good way to lose the
+# repository and the price history with it.
+LOOP_MAX_SECONDS = int(5.5 * 3600)   # under the 6h hosted-runner job cap
+LOOP_INTERVAL_SEC = 600
+# Persist this often, so a cancelled or timed-out loop loses minutes of data
+# rather than the whole window.
+LOOP_PERSIST_EVERY = 3
+
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"

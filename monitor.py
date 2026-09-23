@@ -141,6 +141,37 @@ def preview_post() -> int:
     return 0
 
 
+def run_bounded_loop(monitor, args) -> int:
+    """Repeat-check for a fixed window. Used during sale events.
+
+    `force=True` on every iteration because the loop owns the cadence — the
+    in-process throttle exists to collapse launchd catch-up bursts, and here it
+    would silently skip most of the window. The single-instance lock still
+    applies, so a scheduled run cannot overlap this one.
+    """
+    from watchmon.loop import run_loop
+
+    budget = args.loop_minutes * 60
+    interval = args.loop_interval * 60
+    log = logging.getLogger("watchmon")
+    log.info(
+        "bounded loop: %.0f min window, checking every %.0f min (~%d checks)",
+        args.loop_minutes, args.loop_interval, int(budget // interval),
+    )
+
+    def check() -> int:
+        before = len(load_state().get("alerted", {}))
+        monitor.run(force=True, dry_run=args.dry_run)
+        return max(0, len(load_state().get("alerted", {})) - before)
+
+    result = run_loop(check, budget=budget, interval=interval)
+    print(
+        f"loop finished: {result.iterations} check(s), "
+        f"{result.deals} new alert(s), {result.failures} failure(s)"
+    )
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument(
@@ -158,6 +189,12 @@ def main() -> int:
                     help="print the Telegram post for a sample deal without sending")
     ap.add_argument("--report", action="store_true", help="print a 24h health report")
     ap.add_argument("--report-push", action="store_true", help="send that report to phone + Mac")
+    ap.add_argument("--loop", action="store_true",
+                    help="check repeatedly for a bounded window (sale events)")
+    ap.add_argument("--loop-minutes", type=float, default=config.LOOP_MAX_SECONDS / 60,
+                    help="how long the loop runs for (default ~330, under the 6h job cap)")
+    ap.add_argument("--loop-interval", type=float, default=config.LOOP_INTERVAL_SEC / 60,
+                    help="minutes between checks inside the loop (default 10)")
     ap.add_argument("--show-browser", action="store_true", help="run Chromium headed (debugging)")
     ap.add_argument("-v", "--verbose", action="store_true")
     args = ap.parse_args()
@@ -183,6 +220,10 @@ def main() -> int:
         return 0
 
     monitor = Monitor(threshold=args.threshold, headless=not args.show_browser)
+
+    if args.loop:
+        return run_bounded_loop(monitor, args)
+
     return monitor.run(force=args.force, dry_run=args.dry_run)
 
 
