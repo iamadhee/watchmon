@@ -2,12 +2,12 @@
   "alerted": {
     "steal:itm74d5c0af007b8": 4725
   },
-  "last_attempt_ts": 1790416926.6470275,
-  "updated": "2026-09-26T10:09:37+00:00",
+  "last_attempt_ts": 1790433461.8462095,
+  "updated": "2026-09-26T14:45:05+00:00",
   "failures": 0,
   "last_failure": null,
   "backoff_until_ts": 0,
-  "last_success_ts": 1790416926.6470275,
-  "last_history_ts": 1790416926.6470275,
-  "history_offset": 28
+  "last_success_ts": 1790433461.8462095,
+  "last_history_ts": 1790433461.8462095,
+  "history_offset": 42
 }
