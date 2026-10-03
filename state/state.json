@@ -3,12 +3,12 @@
     "under_threshold:itmde98d3cd4cbcf": 7829,
     "steal:itmb7c24e7cb1d73": 9449
   },
-  "last_attempt_ts": 1790987762.6383467,
-  "updated": "2026-10-03T00:43:15+00:00",
+  "last_attempt_ts": 1791007025.4405003,
+  "updated": "2026-10-03T06:05:23+00:00",
   "failures": 0,
   "last_failure": null,
   "backoff_until_ts": 0,
-  "last_success_ts": 1790987762.6383467,
-  "last_history_ts": 1790987762.6383467,
-  "history_offset": 70
+  "last_success_ts": 1791007025.4405003,
+  "last_history_ts": 1791007025.4405003,
+  "history_offset": 0
 }
