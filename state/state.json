@@ -1,13 +1,11 @@
 {
-  "alerted": {
-    "steal:itm040fd871e0089": 4725
-  },
-  "last_attempt_ts": 1792090143.1681771,
-  "updated": "2026-10-15T18:56:44+00:00",
+  "alerted": {},
+  "last_attempt_ts": 1792101212.2803152,
+  "updated": "2026-10-15T22:01:36+00:00",
   "failures": 0,
   "last_failure": null,
   "backoff_until_ts": 0,
-  "last_success_ts": 1792090143.1681771,
-  "last_history_ts": 1792090143.1681771,
-  "history_offset": 42
+  "last_success_ts": 1792101212.2803152,
+  "last_history_ts": 1792101212.2803152,
+  "history_offset": 56
 }
