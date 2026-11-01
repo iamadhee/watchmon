@@ -1,10 +1,10 @@
 {
   "alerted": {},
-  "last_attempt_ts": 1793530616.5068076,
-  "updated": "2026-11-01T11:04:28+00:00",
-  "failures": 0,
-  "last_failure": null,
-  "backoff_until_ts": 0,
+  "last_attempt_ts": 1793552360.2518096,
+  "updated": "2026-11-01T17:02:30+00:00",
+  "failures": 1,
+  "last_failure": "scrape: Page.goto: Timeout 45000ms exceeded.\nCall log:\n  - navigating to \"https://www.flipkart.com/search?q=casio+automatic&sort=price_asc&page=2\", waiting until \"domcontentloaded\"\n",
+  "backoff_until_ts": 1793552960.2518096,
   "last_success_ts": 1793530616.5068076,
   "last_history_ts": 1793530616.5068076,
   "history_offset": 28
