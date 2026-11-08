@@ -1,11 +1,11 @@
 {
   "alerted": {},
-  "last_attempt_ts": 1794156898.5626402,
-  "updated": "2026-11-08T17:02:40+00:00",
+  "last_attempt_ts": 1794171324.9730456,
+  "updated": "2026-11-08T21:02:36+00:00",
   "failures": 0,
   "last_failure": null,
   "backoff_until_ts": 0,
-  "last_success_ts": 1794156898.5626402,
-  "last_history_ts": 1794156898.5626402,
-  "history_offset": 0
+  "last_success_ts": 1794171324.9730456,
+  "last_history_ts": 1794171324.9730456,
+  "history_offset": 14
 }
