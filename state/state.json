@@ -10,12 +10,12 @@
     "steal:itmec9f74ea9e2e5": 4095,
     "steal:itmfea1b88d91012": 4725
   },
-  "last_attempt_ts": 1795367769.2185154,
-  "updated": "2026-11-22T17:23:32+00:00",
+  "last_attempt_ts": 1795387115.6909935,
+  "updated": "2026-11-22T22:46:02+00:00",
   "failures": 0,
   "last_failure": null,
   "backoff_until_ts": 0,
-  "last_success_ts": 1795367769.2185154,
-  "last_history_ts": 1795367769.2185154,
-  "history_offset": 28
+  "last_success_ts": 1795387115.6909935,
+  "last_history_ts": 1795387115.6909935,
+  "history_offset": 42
 }
