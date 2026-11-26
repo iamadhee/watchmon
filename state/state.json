@@ -1,17 +1,13 @@
 {
   "alerted": {
-    "under_threshold:itmff8a8qze6hgj9": 7695,
-    "steal:itm7b50fc80605d4": 16797,
-    "steal:itm6df302feeabd4": 77997,
-    "steal:itm0d77a84b66334": 119997,
-    "steal:itm551c852577acf": 125997
+    "under_threshold:itmff8a8qze6hgj9": 7695
   },
-  "last_attempt_ts": 1795670154.2463324,
-  "updated": "2026-11-26T05:26:00+00:00",
+  "last_attempt_ts": 1795707120.8088808,
+  "updated": "2026-11-26T15:39:01+00:00",
   "failures": 0,
   "last_failure": null,
   "backoff_until_ts": 0,
-  "last_success_ts": 1795670154.2463324,
-  "last_history_ts": 1795670154.2463324,
-  "history_offset": 0
+  "last_success_ts": 1795707120.8088808,
+  "last_history_ts": 1795707120.8088808,
+  "history_offset": 14
 }
